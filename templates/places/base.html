@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}My Places{% endblock %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'places/css/style.css' %}">
+</head>
+<body>
+<header>
+    <h1><a href="{% url 'places:index' %}">My Favorite Places</a></h1>
+    <nav>
+        <a href="{% url 'places:index' %}">Головна</a> |
+        <a href="{% url 'places:places_list' %}">Список місць</a> |
+        <a href="{% url 'places:add_place' %}">Додати місце</a>
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <p>MyPlaces</p>
+</footer>
+</body>
+</html>

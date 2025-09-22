@@ -1,0 +1,12 @@
+{% load static %}
+<div class="place-preview">
+  <img src="{% static 'places/images/sakura.jpg' %}" alt="img" class="preview-img">
+  <div class="preview-body">
+    <h3><a href="{% url 'places:place_detail' place.id %}">{{ place.name }}</a></h3>
+    <p>{{ place.short_description }}</p>
+    <p>Тип: {{ place.type }}</p>
+    <p>Локація: {% if place.location %}{{ place.location }}{% else %}Secret place{% endif %}</p>
+    <p>Рейтинг: {{ place.rating }}/5</p>
+  </div>
+</div>
+

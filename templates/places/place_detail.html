@@ -1,0 +1,15 @@
+{% extends 'places/base.html' %}
+{% load static %}
+{% block title %}{{ place.name }}{% endblock %}
+
+{% block content %}
+  <h1>{{ place.name }}</h1>
+  <img src="{% static 'places/images/sakura.jpg' %}" alt="{{ place.name }}" class="detail-img">
+  <p><strong>Тип:</strong> {{ place.type }}</p>
+  <p><strong>Локація:</strong> {% if place.location %}{{ place.location }}{% else %}Secret place{% endif %}</p>
+  <p><strong>Рейтинг:</strong> {{ place.rating }} / 5</p>
+  <p><strong>Опис:</strong> {{ place.full_description }}</p>
+  <p><strong>Створено:</strong> {{ place.created_at }}</p>
+{% endblock %}
+
+

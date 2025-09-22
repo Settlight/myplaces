@@ -1,0 +1,22 @@
+{% extends 'places/base.html' %}
+{% load static %}
+{% block title %}Головна{% endblock %}
+
+{% block content %}
+  <h1>Улюблені місця</h1>
+  <p>Цей сайт допоможе вирішити - куди піти сьогодні!</p>
+
+  <form method="post" action="{% url 'places:pick_place' %}">
+    {% csrf_token %}
+    <button type="submit">Куди піти сьогодні?</button>
+  </form>
+
+  {% if preview %}
+    <h2>Обрано:</h2>
+    {% include "places/_place_preview.html" with place=preview %}
+  {% endif %}
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+{% endblock %}
+
