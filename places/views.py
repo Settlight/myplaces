@@ -15,7 +15,6 @@ def _save_places_to_session(request, places):
     request.session.modified = True
 
 def index(request):
-    # Якщо хочеш - автоматично додати приклади при першому заході:
     if not request.session.get('places_initialized'):
         examples = [
             {
@@ -26,7 +25,6 @@ def index(request):
                 'type': 'Кафе',
                 'location': 'Вул. Центральна, 5',
                 'rating': 4,
-                'stars': '★★★★☆',
                 'created_at': timezone.now().isoformat(),
                 'image': DEFAULT_IMAGE,
             },
@@ -38,7 +36,6 @@ def index(request):
                 'type': 'Парк',
                 'location': '',
                 'rating': 5,
-                'stars': '★★★★★',
                 'created_at': timezone.now().isoformat(),
                 'image': DEFAULT_IMAGE,
             },
@@ -75,7 +72,6 @@ def add_place(request):
                 'type': form.cleaned_data.get('type') or 'Невідомо',
                 'location': form.cleaned_data.get('location') or '',
                 'rating': rating,
-                'stars': '★' * rating + '☆' * (5 - rating),
                 'created_at': timezone.now().isoformat(),
                 'image': DEFAULT_IMAGE,
             }
