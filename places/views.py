@@ -7,48 +7,25 @@ from .forms import PlaceForm
 
 DEFAULT_IMAGE = 'places/images/sakura.jpg'
 
+
 def _get_places_from_session(request):
     return request.session.get('places', [])
+
 
 def _save_places_to_session(request, places):
     request.session['places'] = places
     request.session.modified = True
 
-def index(request):
-    if not request.session.get('places_initialized'):
-        examples = [
-            {
-                'id': str(uuid.uuid4()),
-                'name': 'Кав’ярня Sunshine',
-                'full_description': 'Затишна кав’ярня з круасанами та швидким Wi-Fi.',
-                'short_description': 'Затишна кав’ярня з круасанами...',
-                'type': 'Кафе',
-                'location': 'Вул. Центральна, 5',
-                'rating': 4,
-                'created_at': timezone.now().isoformat(),
-                'image': DEFAULT_IMAGE,
-            },
-            {
-                'id': str(uuid.uuid4()),
-                'name': 'Парк Релакс',
-                'full_description': 'Великий парк з атракціонами та озером.',
-                'short_description': 'Великий парк з атракціонами...',
-                'type': 'Парк',
-                'location': '',
-                'rating': 5,
-                'created_at': timezone.now().isoformat(),
-                'image': DEFAULT_IMAGE,
-            },
-        ]
-        request.session['places'] = examples
-        request.session['places_initialized'] = True
 
+def index(request):
     return render(request, 'places/index.html', {})
+
 
 def places_list(request):
     places = _get_places_from_session(request)
     places_sorted = sorted(places, key=lambda p: p.get('created_at', ''), reverse=True)
     return render(request, 'places/places_list.html', {'places': places_sorted})
+
 
 def place_detail(request, place_id):
     places = _get_places_from_session(request)
@@ -56,6 +33,7 @@ def place_detail(request, place_id):
     if place is None:
         return redirect('places:places_list')
     return render(request, 'places/place_detail.html', {'place': place})
+
 
 @require_http_methods(['GET', 'POST'])
 def add_place(request):
@@ -82,6 +60,7 @@ def add_place(request):
         form = PlaceForm()
     return render(request, 'places/add_place.html', {'form': form})
 
+
 @require_http_methods(['POST'])
 def pick_place(request):
     places = _get_places_from_session(request)
@@ -90,6 +69,7 @@ def pick_place(request):
     weights = [p.get('rating', 1) for p in places]
     selected = random.choices(places, weights=weights, k=1)[0]
     return render(request, 'places/index.html', {'preview': selected})
+
 
 
 
